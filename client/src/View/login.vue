@@ -46,10 +46,10 @@ export default {
     async loginEventHandeler () {
       let res = await this.$store.dispatch('login', {
         account: this.account,
-        password: this.password,
+        password: this.password
       })
 
-      if (!res.result) {
+      if (!res.success) {
         console.log(res)
         this.errHint = res.errMsg
         return

@@ -1,6 +1,6 @@
-import moment from "moment";
+import moment from 'moment'
 
-import userAuth from "@/API/User/Auth";
+import userAuth from '@/API/User/Auth'
 
 const state = {
   isAuthChecked: false,
@@ -8,7 +8,7 @@ const state = {
   authToken: null,
   loginTime: null,
   maxDurationTime: moment.duration(1 * 60 * 60 * 1000).asHours()
-};
+}
 
 const getters = {
   isLogin: state => !!state.user,
@@ -17,105 +17,108 @@ const getters = {
     return (
       moment.duration(moment().diff(state.loginTime)).asHours() <
       state.maxDurationTime
-    );
+    )
   },
-  userID: state => state.user && state.user._id,
+  userID: state => state.user && state.user.id,
   userAccount: state => state.user && state.user.account,
   userFollowing: state => state.user && state.user.following,
   authToken: state => state.authToken
-};
+}
 
 const actions = {
   regist: async ({ commit }, para) => {
     if (!para.name || !para.account || !para.password || !para.password2) {
       return {
-        errMsg: "請勿空白",
+        errMsg: '請勿空白',
         result: false
-      };
+      }
     }
 
-    let { res, token } = await userAuth.regist(para);
+    let { res, token } = await userAuth.regist(para)
 
     if (res.result) {
-      commit("setUser", res.user);
-      commit("setAuthToken", token);
-      commit("setLoginTime", moment());
-      window.localStorage.setItem("AuthToken", token);
+      commit('setUser', res.user)
+     commit('setAuthToken', token)
+      commit('setLoginTime', moment())
+      window.localStorage.setItem('AuthToken', token)
     }
-    return res;
+    return res
   },
   login: async ({ commit }, para) => {
     if (!para.account || !para.password) {
       return {
-        errMsg: "帳號和密碼請勿空白",
+        errMsg: '帳號和密碼請勿空白',
         result: false
-      };
+      }
     }
-    para.username = para.account;
-    para.email = "test@example.com";
-    let { res, token } = await userAuth.login(para);
-
-    if (res.result) {
-      commit("setUser", res.username);
-      commit("setAuthToken", token);
-      commit("setLoginTime", moment());
-      window.localStorage.setItem("AuthToken", token);
+    para.username = para.account
+    para.email = 'test@example.com'
+    let { res, token } = await userAuth.login(para)
+    console.log('1')
+    if (res.success) {
+      console.log('2')
+      console.log(res.user)
+      console.log(token)
+      commit('setUser', res.user)
+      commit('setAuthToken', token)
+      commit('setLoginTime', moment())
+      window.localStorage.setItem('AuthToken', token)
     }
-    return res;
+    return res
   },
   logout: ({ commit }) => {
-    window.localStorage.removeItem("AuthToken");
-    commit("setUser", null);
-    commit("setAuthToken", null);
-    commit("setLoginTime", null);
+    window.localStorage.removeItem('AuthToken')
+    commit('setUser', null)
+    commit('setAuthToken', null)
+    commit('setLoginTime', null)
   },
   checkAuth: async ({ commit }) => {
-    commit("setIsAuthChecked", true);
+    commit('setIsAuthChecked', true)
 
-    let currentToken = window.localStorage.getItem("AuthToken");
+    let currentToken = window.localStorage.getItem('AuthToken')
     if (!currentToken) {
       return {
         result: false,
-        errMsg: "No Auth Token"
-      };
+        errMsg: 'No Auth Token'
+      }
     }
 
-    let { res, token } = await userAuth.checkAuth(currentToken);
-
+    let { res, token } = await userAuth.checkAuth(currentToken)
+    return true;
     if (res.result) {
-      window.localStorage.setItem("AuthToken", token);
-      commit("setUser", res.user);
-      commit("setAuthToken", token);
-      commit("setLoginTime", moment());
+      window.localStorage.setItem('AuthToken', token)
+      commit('setUser', res.user)
+      commit('setAuthToken', token)
+      commit('setLoginTime', moment())
     } else {
       // window.localStorage.removeItem('AuthToken')
-      commit("setUser", null);
-      commit("setAuthToken", null);
-      commit("setLoginTime", null);
+      commit('setUser', null)
+      commit('setAuthToken', null)
+      commit('setLoginTime', null)
     }
 
-    return res;
+    return res
   }
-};
+}
 
 const mutations = {
   setUser: (state, user) => {
-    state.user = user;
+    state.user = user
   },
   setIsAuthChecked: (state, boolean) => {
-    state.isAuthChecked = boolean;
+    state.isAuthChecked = boolean
   },
   setAuthToken: (state, token) => {
-    state.authToken = token;
+    state.authToken = token
   },
   setLoginTime: (state, time) => {
-    state.loginTime = time;
+    state.loginTime = time
   }
-};
+}
 
 export default {
   state,
   getters,
   actions,
   mutations
-};
+}
