@@ -27,17 +27,14 @@ async function getBasicInfo () {
 }
 
 // Get logined user self's and following's posts
-async function getPosts() {
+async function getPosts () {
   let token = store.getters.authToken
   let res
 
   try {
     res = await axios({
       method: 'GET',
-      url: '/API/user/posts',
-      headers: {
-        'x-auth': token
-      }
+      url: '/api/users/' + store.getters.userID + '/posts'
     })
 
     return res.data

@@ -63,6 +63,7 @@ const actions = {
       commit('setAuthToken', token)
       commit('setLoginTime', moment())
       window.localStorage.setItem('AuthToken', token)
+      console.log('save token' + token)
     }
     return res
   },
@@ -78,14 +79,14 @@ const actions = {
     let currentToken = window.localStorage.getItem('AuthToken')
     if (!currentToken) {
       return {
-        result: false,
+        success: false,
         errMsg: 'No Auth Token'
       }
     }
 
     let { res, token } = await userAuth.checkAuth(currentToken)
-    return true;
-    if (res.result) {
+    if (res.success) {
+      console.log('valid token')
       window.localStorage.setItem('AuthToken', token)
       commit('setUser', res.user)
       commit('setAuthToken', token)
