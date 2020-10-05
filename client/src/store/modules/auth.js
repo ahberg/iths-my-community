@@ -20,45 +20,41 @@ const getters = {
     )
   },
   userID: state => state.user && state.user.id,
-  userAccount: state => state.user && state.user.account,
+  userAccount: state => state.user && state.user.username,
   userFollowing: state => state.user && state.user.following,
   authToken: state => state.authToken
+  
 }
 
 const actions = {
   regist: async ({ commit }, para) => {
-    if (!para.name || !para.account || !para.password || !para.password2) {
+    if (!para.name || !para.username || !para.password || !para.password2) {
       return {
-        errMsg: '請勿空白',
+        errMsg: 'Empty fields',
         result: false
       }
     }
 
     let { res, token } = await userAuth.regist(para)
-
+    return res
     if (res.result) {
       commit('setUser', res.user)
-     commit('setAuthToken', token)
+      commit('setAuthToken', token)
       commit('setLoginTime', moment())
       window.localStorage.setItem('AuthToken', token)
     }
     return res
   },
   login: async ({ commit }, para) => {
-    if (!para.account || !para.password) {
+    if (!para.username || !para.password) {
       return {
-        errMsg: '帳號和密碼請勿空白',
+        errMsg: 'No username or password',
         result: false
       }
     }
-    para.username = para.account
-    para.email = 'test@example.com'
     let { res, token } = await userAuth.login(para)
-    console.log('1')
+   
     if (res.success) {
-      console.log('2')
-      console.log(res.user)
-      console.log(token)
       commit('setUser', res.user)
       commit('setAuthToken', token)
       commit('setLoginTime', moment())

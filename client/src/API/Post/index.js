@@ -51,7 +51,7 @@ async function GetDetailPostInfo (postId) {
   try {
     res = await axios({
       method: 'GET',
-      url: `/API/post/${postId}`,
+      url: `/api/post/${postId}`,
       headers: {
         'x-auth': store.getters.authToken
       }

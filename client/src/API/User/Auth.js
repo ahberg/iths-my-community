@@ -4,7 +4,7 @@ async function login (request) {
   let res
 
   try {
-    res = await axios.post('/api/users/login', request)
+    res = await axios.post('/api/user/login', request)
   } catch (e) {
     return {
       res: {
@@ -25,12 +25,13 @@ async function regist (request) {
   let res
 
   try {
-    res = await axios.post('/API/user/', request)
+    res = await axios.post('/api/user/', request)
   } catch (e) {
+    console.log(e.response.data)
     return {
       res: {
-        result: false,
-        errMsg: '無法連接伺服器'
+        success: false,
+        message: e.response.data.message
       },
       token: null
     }

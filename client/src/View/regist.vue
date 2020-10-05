@@ -3,18 +3,18 @@
     <div class="RegistFormContainer">
       <div class="Wrapper">
         <div class="RegistText">
-          <span>Create your account</span>
+          <span>Create your username</span>
         </div>
         <div class="ErrHint alert alert-danger" v-if="errHint">
           {{ errHint }}
         </div>
         <div class="RegistInput">
           <div class="username">
-            <input type="text" v-model="name" placeholder="Username">
+            <input type="text" v-model="username" placeholder="Username">
           </div>
-          <div class="account">
-            <input type="text" v-model="account" placeholder="Account">
-          </div>
+          <div class="name">
+            <input type="text" v-model="name" placeholder="Name">
+            </div>
           <div class="password">
             <input type="password" v-model="password" placeholder="password">
           </div>
@@ -44,7 +44,7 @@ export default {
   data () {
     return {
       name: null,
-      account: null,
+      username: null,
       password: null,
       password2: null,
       errHint: ''
@@ -54,18 +54,17 @@ export default {
     async registEventHandler () {
       let res = await this.$store.dispatch('regist', {
         name: this.name,
-        account: this.account,
+        username: this.username,
         password: this.password,
         password2: this.password2
       })
 
-      if (!res.result) {
-        console.log(res)
-        this.errHint = res.errMsg
+      if (res.success === false) {
+        this.errHint = res.message
         return
       }
 
-      this.$router.push('/')
+      this.$router.push('/login')
     }
   }
 }
@@ -119,7 +118,6 @@ export default {
 }
 
 .RegistInput .username,
-.RegistInput .account,
 .RegistInput .password {
   margin-bottom: 15px;
 }

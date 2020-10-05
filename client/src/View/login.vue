@@ -9,8 +9,8 @@
           {{ errHint }}
         </div>
         <div class="LoginInput">
-          <div class="account">
-            <input type="text" v-model="account" placeholder="account">
+          <div class="username">
+            <input type="text" v-model="username" placeholder="username">
           </div>
           <div class="password">
             <input type="password" v-model="password" placeholder="password">
@@ -37,7 +37,7 @@ export default {
   name: 'LoginPage',
   data () {
     return {
-      account: null,
+      username: null,
       password: null,
       errHint: null
     }
@@ -45,7 +45,7 @@ export default {
   methods: {
     async loginEventHandeler () {
       let res = await this.$store.dispatch('login', {
-        account: this.account,
+        username: this.username,
         password: this.password
       })
 
@@ -108,7 +108,7 @@ export default {
   border-color: rgba(0,132,180,0.5);
 }
 
-.LoginInput .account {
+.LoginInput .username {
   margin-bottom: 15px;
 }
 

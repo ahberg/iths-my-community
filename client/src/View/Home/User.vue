@@ -16,7 +16,7 @@
             <div class="ProfileInfo">
               <div class="ProfilePosts">
                 <div class="Title">
-                  <span>Total Posts2</span>
+                  <span>Total Posts</span>
                 </div>
                 <div class="Count">
                   <span>{{userPostsCount}}</span>
@@ -70,16 +70,16 @@ export default {
   },
   computed: {
     userName: function () {
-      return this.user ? this.user.name : ''
+      return this.user ? this.user.username : ''
     },
     userAccount: function () {
-      return this.user ? this.user.account : ''
+      return this.user ? this.user.username : ''
     },
     userImg: function () {
       return this.user ? this.user.profileImg : ''
     },
     userWallImg: function () {
-      return this.user ? this.user.bkgWallImg : ''
+      return '/static/img/default-user-bkg-img.jpg'
     },
     userPostsCount: function () {
       return this.user ? this.user.posts.length : 0
@@ -100,7 +100,7 @@ export default {
       let res = await UserInfoAPI.getBasicInfo()
       this.userLoaded = true
 
-      if (!res.result) {
+      if (!res.success) {
         console.log(res)
         return
       }
