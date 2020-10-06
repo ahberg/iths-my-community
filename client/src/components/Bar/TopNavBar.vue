@@ -16,9 +16,12 @@
         <div class="UserStatusContainer" v-if="isLogin">
           <img :src="user.profileImg" class="UserImg" @click.stop="showStatus = !showStatus">
           <div class="StatusContainer" v-if="showStatus">
-            <router-link tag="div" :to="`/${user.account}`" class="UserInfo">
-              <div class="Name">{{user.name}}</div>
-              <div class="Account">@{{user.account}}</div>
+            <router-link tag="div" :to="`/${user.username}`" class="UserInfo">
+              <div class="Username">@{{user.username}}</div>
+            </router-link>
+            <div class="divider"></div>
+            <router-link tag="div" :to="`/${user.username}/edit`" class="EditProfile">
+              <div class="Username">Edit profile</div>
             </router-link>
             <div class="divider"></div>
             <div class="Btns">
@@ -147,12 +150,12 @@ export default {
   margin: 0 10px;
   cursor: pointer;
 }
-
+#TopNavBar .EditProfile,
 #TopNavBar .UserInfo {
   padding: 0 16px;
   cursor: pointer;
 }
-
+#TopNavBar .EditProfile .Name,
 #TopNavBar .UserInfo .Name{
   font-size: 18px;
   line-height: 24px;
@@ -162,7 +165,7 @@ export default {
   font-weight: bold;
 }
 
-#TopNavBar .UserInfo .Account {
+#TopNavBar .UserInfo .Username {
   color: #657786;
 }
 
