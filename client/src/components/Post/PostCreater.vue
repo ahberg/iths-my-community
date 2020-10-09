@@ -54,12 +54,11 @@ export default {
           content: this.inputContent.replace(reg, '<br>')
         })
 
-      if (!res.result || !res.post) {
-        console.log(res)
+      if (!res.success || !res.post) {
         this.errorMessage = res.errMsg
         return
       }
-
+  
       this.inputContent = ''
       this.contentEl.innerText = ''
       this.$emit('newPost', res.post)

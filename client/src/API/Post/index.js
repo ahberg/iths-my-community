@@ -3,7 +3,7 @@ import axios from 'axios'
 import store from '@/store'
 
 async function SendPost (request) {
-  let res;
+  let res
 
   try {
     res = await axios({
@@ -13,7 +13,7 @@ async function SendPost (request) {
     })
   } catch (e) {
     return {
-      result: false,
+      success: false,
       errMsg: '/api/post error'
     }
   }
@@ -22,7 +22,7 @@ async function SendPost (request) {
 }
 
 async function ToggleLike (postId) {
-  let res;
+  let res
 
   try {
     res = await axios({
@@ -34,7 +34,7 @@ async function ToggleLike (postId) {
     })
   } catch (e) {
     return {
-      result: false,
+      success: false,
       errMsg: '無法連接伺服器'
     }
   }
@@ -43,7 +43,7 @@ async function ToggleLike (postId) {
 }
 
 async function GetDetailPostInfo (postId) {
-  let res;
+  let res
 
   try {
     res = await axios({
@@ -52,11 +52,11 @@ async function GetDetailPostInfo (postId) {
     })
   } catch (e) {
     return {
-      result: false,
+      success: false,
       errMsg: '無法連接伺服器'
     }
   }
-  
+
   return res.data
 }
 
