@@ -24,7 +24,7 @@
     <div class="RegistHint">
       <div class="Wrapper">
         <div class="hint">
-          <span> no account? ?</span>
+          <span> No account? </span>
           <router-link to="/regist">Sign up »</router-link>
         </div>
       </div>

@@ -41,7 +41,7 @@ export default [
         component: PersonalPost,
         children: [
           {
-            path: 'post/:PostID',
+            path: 'post/:PostId',
             name: 'PersonDetailPostInfo',
             components: {
               DetailPostInfoComponent
@@ -70,7 +70,7 @@ export default [
     },
     children: [
       {
-        path: ':PersonAccount/post/:PostID',
+        path: ':PersonAccount/post/:id',
         name: 'UserDetailPostInfo',
         props: {
           backRoute: '/'
@@ -92,6 +92,13 @@ export default [
     components: {
       TopNavBar,
       default: EditProfile
+    },
+    beforeEnter (to, from, next) {
+      if (!store.getters.isLogin) {
+        return next({ name: 'Home' })
+      }
+
+      return next()
     }
   }
 ]

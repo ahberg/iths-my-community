@@ -8,16 +8,13 @@ async function SendPost (request) {
   try {
     res = await axios({
       method: 'POST',
-      url: `/API/post/`,
-      data: request,
-      headers: {
-        'x-auth': store.getters.authToken
-      }
+      url: `/api/post/`,
+      data: request
     })
   } catch (e) {
     return {
       result: false,
-      errMsg: '無法連接伺服器'
+      errMsg: '/api/post error'
     }
   }
 
@@ -51,10 +48,7 @@ async function GetDetailPostInfo (postId) {
   try {
     res = await axios({
       method: 'GET',
-      url: `/api/post/${postId}`,
-      headers: {
-        'x-auth': store.getters.authToken
-      }
+      url: `/api/post/${postId}`
     })
   } catch (e) {
     return {
@@ -62,7 +56,7 @@ async function GetDetailPostInfo (postId) {
       errMsg: '無法連接伺服器'
     }
   }
-
+  
   return res.data
 }
 

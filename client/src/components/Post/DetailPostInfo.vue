@@ -7,7 +7,7 @@
       <div class="PersonBox">
         <div class="LeftSide">
           <div class="ProfileImg">
-            <img :src="Post.author.profileImg" alt="">
+            <img src="Post.author.profileImg" alt="">
           </div>
         </div>
         <div class="RightSide">
@@ -16,7 +16,7 @@
               {{Post.author.name}}
             </div>
             <div class="UserId">
-              @<span class="id">{{Post.author.account}}
+              @<span class="id">{{Post.author.id}}
               </span>
             </div>
           </div>
@@ -25,7 +25,7 @@
       </div>
       <div class="PostContentBox" v-html="Post.content"></div>
       <div class="PostDate">
-        {{RegPostDate(Post.created)}}
+        {{RegPostDate(Post.createdAt)}}
       </div>
       <div class="Status">
         <div class="CommentCount">
@@ -92,8 +92,8 @@ export default {
   data () {
     return {
       personAccount: this.$route.params.PersonAccount,
-      postID: this.$route.params.PostID,
       Post: null,
+      id: this.$route.params.id,
       loaded: false,
       errorMessage: '',
       inputContent: '',
@@ -148,10 +148,10 @@ export default {
     async GetPostInfo() {
       this.Post = null
       this.loaded = false
-      let res = await postAPI.GetDetailPostInfo(this.postID)
+      let res = await postAPI.GetDetailPostInfo(this.id)
       this.loaded = true
 
-      if (!res.result) {
+      if (!res.success) {
         this.errorMessage = res.errMsg
         return
       }
@@ -174,11 +174,11 @@ export default {
     },
     async replyBtnClickEventHandler() {
       let reg = new RegExp("\n","g");
-      let res = await commentAPI.SendCommentToPost(this.postID, {
+      let res = await commentAPI.SendCommentToPost(this.id, {
           content: this.inputContent.replace(reg, '<br>')
         })
 
-      if (!res.result) {
+      if (!res.success) {
         console.log(res)
         return
       }

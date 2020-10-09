@@ -34,7 +34,7 @@ async function getPosts () {
     return res.data
   } catch (e) {
     return {
-      result: false,
+      success: false,
       errMsg: '/api/user/posts falied'
     }
   }

@@ -1,5 +1,5 @@
 <template lang="html">
-  <router-link class="Post" :to="{name: postRouteName, params: {PersonAccount: post.author.account, PostID: post._id}}" tag="div">
+  <router-link class="Post" :to="{name: postRouteName, params: {PersonAccount: post.author, id: post.id}}" tag="div">
     <div class="LeftSide">
       <div class="ProfileImg">
         <img :src="post.author.profileImg" alt="">
@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <PostCommentBoxComponent v-if="showReplyBox" @Close="showReplyBox = false" @ReplySuccess="replySuccessEventHandler" :postID="post._id">
+    <PostCommentBoxComponent v-if="showReplyBox" @Close="showReplyBox = false" @ReplySuccess="replySuccessEventHandler" :postId="post.id">
       <template slot="Title">{{post.author.name}}</template>
       <template slot="ProfileImg">
         <img :src="post.author.profileImg" alt="">
@@ -82,8 +82,8 @@ export default {
     }
   },
   created() {
-    this.likes = this.post.likes
-    this.comments = this.post.comments
+    this.likes = []
+    this.comments = []
   },
   watch: {
     post: function () {
@@ -92,8 +92,8 @@ export default {
     }
   },
   methods: {
-    async toggleLike(postID) {
-      let res = await postAPI.ToggleLike(postID)
+    async toggleLike(postId) {
+      let res = await postAPI.ToggleLike(postId)
 
       if (res.result) {
         this.likes = res.likes

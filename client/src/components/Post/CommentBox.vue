@@ -52,7 +52,7 @@ import ErrorMessageBar from '@/components/Bar/ErrorMessageBar'
 
 export default {
   name: 'PostCommentBox',
-  props: ['postID'],
+  props: ['postId'],
   components: {
     ErrorMessageBar
   },
@@ -70,7 +70,7 @@ export default {
       this.inputContent = e.target.innerText.trim()
     },
     async replyBtnClickEventHandler (e) {
-      let res = await commentAPI.SendCommentToPost(this.postID, {
+      let res = await commentAPI.SendCommentToPost(this.postId, {
         content: this.inputContent
       })
 

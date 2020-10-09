@@ -115,7 +115,7 @@ export default {
       let res = await UserInfoAPI.getPosts()
       this.postLoaded = true
 
-      if (!res.result) {
+      if (!res.success) {
         this.errorMessage = res.errMsg
         return
       }
