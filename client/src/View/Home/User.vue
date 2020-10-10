@@ -37,7 +37,7 @@
       <div class="RightSideContainer">
         <LoadingAnimationComponent :class="{loadingAnimation: true, loaded: postLoaded}" />
         <PostCreaterComponent @newPost="newPostEventHandler"/>
-        <PostsBoxComponent :posts="posts" detailPostRouteName="UserDetailPostInfo" v-if="postLoaded"/>
+        <PostsBoxComponent :posts="posts" detailPostRouteName="UserDetailPostInfo" @deletePost="deletePostEventHandler" v-if="postLoaded"/>
         <router-view />
       </div>
     </div>
@@ -101,7 +101,6 @@ export default {
       this.userLoaded = true
 
       if (!res.success) {
-        console.log(res)
         return
       }
 
@@ -124,6 +123,10 @@ export default {
     },
     newPostEventHandler (newPost) {
       this.posts.unshift(newPost)
+    },
+    deletePostEventHandler (id) {
+      let removeIndex = this.posts.map(item => item.id).indexOf(id)
+      this.posts.splice(removeIndex, 1)
     }
   }
 }

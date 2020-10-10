@@ -1,5 +1,5 @@
 <template lang="html">
-  <router-link class="Post" :to="{name: postRouteName, params: {PersonAccount: post.author, id: post.id}}" tag="div">
+  <div class="Post" >
     <div class="LeftSide">
       <div class="ProfileImg">
         <img :src="post.author.profileImg" alt="">
@@ -22,10 +22,15 @@
           </span>
         </div>
         <div class="LikeBtn Btn" :isLiked="isLiked">
-          <span class="BtnWrapper" @click.stop="toggleLike(post._id)">
+          <span class="BtnWrapper" @click.stop="toggleLike(post.id)">
             <i class="fas fa-heart" v-if="isLiked"></i>
             <i class="far fa-heart" v-if="!isLiked"></i>
             <span class="Count">{{likesCount}}</span>
+          </span>
+          </div>
+          <div class="DeleteBtn Btn" >
+          <span class="BtnWrapper" @click.stop="deletePost(post.id)">
+            <i class="far fa-trash-alt"></i>
           </span>
         </div>
       </div>
@@ -42,7 +47,7 @@
         <div v-html="post.content"></div>
       </template>
     </PostCommentBoxComponent>
-  </router-link>
+  </div>
 </template>
 
 <script>
@@ -66,7 +71,7 @@ export default {
   },
   computed: {
     postRouteName: function () {
-      return !!this.detailPostRouteName ? this.detailPostRouteName : 'PersonDetailPostInfo'
+      return this.detailPostRouteName ? this.detailPostRouteName : 'PersonDetailPostInfo'
     },
     RegPostDate: function () {
       return date => moment(date).format('YYYY-MM-DD')
@@ -81,7 +86,7 @@ export default {
       return this.comments.length
     }
   },
-  created() {
+  created () {
     this.likes = []
     this.comments = []
   },
@@ -92,14 +97,21 @@ export default {
     }
   },
   methods: {
-    async toggleLike(postId) {
+    async toggleLike (postId) {
       let res = await postAPI.ToggleLike(postId)
 
       if (res.result) {
         this.likes = res.likes
       }
     },
-    openReplyBox() {
+    async deletePost (postId) {
+      let res = await postAPI.DeletePost(postId)
+      if (res.success) {
+            this.$emit('deletePost', postId)
+          console.log('delete')
+      }
+    },
+    openReplyBox () {
       if (!this.$store.getters.isLogin) {
         return this.$router.push({
           name: 'login'
@@ -108,7 +120,7 @@ export default {
 
       this.showReplyBox = true
     },
-    replySuccessEventHandler(comments) {
+    replySuccessEventHandler (comments) {
       this.comments = comments
     }
   }

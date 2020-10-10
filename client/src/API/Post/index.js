@@ -21,6 +21,24 @@ async function SendPost (request) {
   return res.data
 }
 
+async function DeletePost (postId) {
+  let res
+
+  try {
+    res = await axios({
+      method: 'DELETE',
+      url: `/api/post/${postId}`
+    })
+  } catch (e) {
+    return {
+      success: false,
+      errMsg: '/api/post delete error'
+    }
+  }
+
+  return res.data
+}
+
 async function ToggleLike (postId) {
   let res
 
@@ -63,5 +81,6 @@ async function GetDetailPostInfo (postId) {
 export default {
   SendPost,
   ToggleLike,
-  GetDetailPostInfo
+  GetDetailPostInfo,
+  DeletePost
 }
