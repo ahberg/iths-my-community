@@ -4,7 +4,7 @@
       <PostItemComponent v-for="post in posts" :post="post" @deletePost="deletePost" :detailPostRouteName="detailPostRouteName" :key="post.id"/>
       <div class="NonPost" v-if="!posts.length">
         <!--<img src="/static/img/twitter-bird.png" alt="">-->
-        <div class="txt">尚未有貼文</div>
+        <div class="txt">None post</div>
       </div>
     </div>
   </div>

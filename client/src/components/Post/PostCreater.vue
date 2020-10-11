@@ -5,7 +5,7 @@
     <div class="EditerContainer">
       <div class="Editer" default-txt="" contenteditable @focus="editerFocusEventHandler" @blur="editerBlurEventHandler" @input="editerInputEventHandler">
       </div>
-      <button type="button" class="btn PostBtn" :disabled="!inputContent.length" v-if="isEditerFocused" @mousedown="sendPostBtnClickEventHandler">發推</button>
+      <button type="button" class="btn PostBtn" :disabled="!inputContent.length" v-if="isEditerFocused" @mousedown="sendPostBtnClickEventHandler">publish</button>
     </div>
   </div>
 </template>

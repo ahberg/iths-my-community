@@ -53,7 +53,7 @@ async function ToggleLike (postId) {
   } catch (e) {
     return {
       success: false,
-      errMsg: '無法連接伺服器'
+      errMsg: 'get likes error'
     }
   }
 
@@ -71,7 +71,7 @@ async function GetDetailPostInfo (postId) {
   } catch (e) {
     return {
       success: false,
-      errMsg: '無法連接伺服器'
+      errMsg: '/api/post/:postId'
     }
   }
 
