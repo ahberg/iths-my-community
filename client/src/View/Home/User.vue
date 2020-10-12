@@ -4,14 +4,17 @@
     <div class="UserHomeWrapper">
       <div class="LeftSideContainer">
         <div class="ProfileCardContainer" v-if="user">
-          <router-link tag="div" :to="{name: 'PersonPosts', params: {PersonAccount: userAccount}}" class="ProfileWallImg" :style="`background-image: url(${userWallImg})`"></router-link>
+          <div tag="div" :to="{name: 'PersonPosts', params: {PersonAccount: userAccount}}" class="ProfileWallImg" :style="`background-image: url(${userWallImg})`"></div>
           <div class="ProfileContentContainer">
-            <router-link tag="img" :to="{name: 'PersonPosts', params: {PersonAccount: userAccount}}" :src="userImg" class="ProfileUserImg"></router-link>
+            <img :src="userImg" class="ProfileUserImg">
             <div class="ProfileName">
-              <router-link tag="span" :to="{name: 'PersonPosts', params: {PersonAccount: userAccount}}">{{userName}}</router-link>
+             {{userName}}
             </div>
             <div class="ProfileAccount">
-              <router-link tag="span" :to="{name: 'PersonPosts', params: {PersonAccount: userAccount}}">@{{userAccount}}</router-link>
+                @{{userAccount}}
+            </div>
+            <div class="ProfileBio">
+             <p> {{userBio}}</p>
             </div>
             <div class="ProfileInfo">
               <div class="ProfilePosts">
@@ -78,6 +81,9 @@ export default {
     userImg: function () {
       return this.user ? this.user.profileImg : ''
     },
+    userBio: function () {
+      return this.user ? this.user.bio : ''
+    },
     userWallImg: function () {
       return '/static/img/default-user-bkg-img.jpg'
     },
@@ -105,7 +111,7 @@ export default {
       }
 
       this.user = res.user
-      document.title = `${this.user.name} (@${this.user.account})`
+      document.title = `${this.user.name} (@${this.user.username})`
     },
     getPosts: async function () {
       this.postLoaded = false
@@ -160,7 +166,6 @@ export default {
   height: 95px;
   background-position: center;
   background-size: cover;
-  cursor: pointer;
 }
 
 .ProfileUserImg {
@@ -172,7 +177,6 @@ export default {
   overflow: hidden;
   color: #fff;
   margin: -30px 0 0 8px;
-  cursor: pointer;
 }
 
 .ProfileName {
@@ -193,9 +197,11 @@ export default {
   color: #66757f;
 }
 
-.ProfileName span,
-.ProfileAccount span {
-  cursor: pointer;
+.ProfileBio p {
+  padding-left: 16px;
+  padding-top: 8px;
+  color:#66757f;
+
 }
 
 .ProfileInfo {
