@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="ItemContainer" v-if="person">
     <div class="Item">
-      <div class="BkgWall" :style="`background-image: url(${person.bkgWallImg})`"></div>
+      <div class="BkgWall" :style="`background-image: url(${person.userImg})`"></div>
       <div class="Content">
         <div class="ProfileImg">
           <img :src="person.profileImg" alt="">
@@ -16,10 +16,10 @@
             </router-link>
           </div>
           <div class="ID">
-            @{{person.account}}
+            @{{person.username}}
           </div>
-          <div class="Des">
-
+          <div class="Bio">
+            {{person.bio}}
           </div>
         </div>
       </div>

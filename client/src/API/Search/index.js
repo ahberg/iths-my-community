@@ -1,29 +1,23 @@
 import axios from 'axios'
 
-import store from '@/store'
-
-async function searchUsers(queryTxt) {
-  let token = store.getters.authToken
+async function listUsers () {
   let res
 
   try {
     res = await axios({
       method: 'GET',
-      url: `/API/search/person/${queryTxt}`,
-      headers: {
-        'x-auth': token
-      }
+      url: `/api/users`
     })
 
     return res.data
   } catch (e) {
     return {
-      result: false,
-      errMsg: '無法連接伺服器'
+      success: false,
+      errMsg: 'Failed /api/users/'
     }
   }
 }
 
 export default {
-  searchUsers
+  listUsers
 }

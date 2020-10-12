@@ -1,21 +1,9 @@
 <template lang="html">
-  <div class="SearchViewContainer">
+  <div class="ViewContainer">
     <ErrorMessageBar :text="errorMessage" v-if="errorMessage"/>
-    <div class="QueryTextContainer">
-      <div class="QueryTextWrapper">{{query}}</div>
-    </div>
-    <div class="QueryTypesContainer">
-      <div class="QueryTypesWrapper">
-        <div class="TypesList">
-          <div class="TypesItem active">
-            人們
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="SearchResultContainer">
+    <div class="ResultContainer">
       <LoadingAnimationComponent :class="{loadingAnimation: true, loaded: loaded}"/>
-      <div class="SearchResultWrapper">
+      <div class="ResultWrapper">
         <PeopleBox :personList="personList" columnCount="3"/>
       </div>
       <div class="NoData" v-if="loaded && !personList.length">
@@ -32,7 +20,7 @@ import ErrorMessageBar from '@/components/Bar/ErrorMessageBar'
 import SearchAPI from '@/API/Search'
 
 export default {
-  name: 'SearchView',
+  name: 'UsersView',
   props: ['query'],
   components: {
     PeopleBox,
@@ -47,20 +35,17 @@ export default {
     }
   },
   created () {
-    this.searchUsers()
-  },
-  watch: {
-    query: 'searchUsers'
+    this.findUsers()
   },
   methods: {
-    async searchUsers () {
+    async findUsers () {
       this.loaded = false
       this.personList = []
-      let res = await SearchAPI.searchUsers(this.query.trim())
+      let res = await SearchAPI.listUsers()
       this.loaded = true
 
       if (!res.success) {
-        this.errorMessage = 'search api error'
+        this.errorMessage = 'List users api error'
         console.log(res)
         return
       }
@@ -72,7 +57,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.SearchViewContainer {
+.ViewContainer {
   margin-top: 46px;
   height: calc(100vh - 46px);
   background-color: #e6ecf0;
@@ -142,11 +127,11 @@ export default {
   opacity: 1;
 }
 
-.SearchResultContainer {
+.ResultContainer {
   margin-top: 15px;
 }
 
-.SearchResultWrapper {
+.ResultWrapper {
   max-width: 890px;
   margin: 0 auto;
 }

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="PersonListContainer">
     <div class="List" v-if="personList">
-      <PersonItem v-for="person in personList" :person="person" :style="`width: ${itemWidth}`" :key="person._id"/>
+      <PersonItem v-for="person in personList" :person="person" :style="`width: ${itemWidth}`" :key="person.id"/>
     </div>
   </div>
 </template>

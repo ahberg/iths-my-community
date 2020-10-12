@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="FollowBtnContainer" v-if="!isLoginedUser">
     <ErrorMessageBar :text="errorMessage" v-if="errorMessage"/>
-    <button class="FollowBtn" v-if="!isFollowing" @click="followClickEventHandler">追蹤</button>
+    <button class="FollowBtn" v-if="!isFollowing" @click="followClickEventHandler">Follow</button>
     <button class="BackFollowBtn" v-if="isFollowing" @mouseenter="backFollowMouseEnterEventHandler" @mouseleave="backFollowMouseLeaveEventHandler" @click="backFollowClickEventHandler">{{followingBtnTxt}}</button>
   </div>
 </template>

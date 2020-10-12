@@ -1,18 +1,18 @@
 import TopNavBar from '@/components/Bar/TopNavBar'
-import SearchView from '@/View/Search'
+import UsersView from '@/View/Users'
 
 export default [{
-  path: '/search/:query',
-  name: 'Search',
+  path: '/users',
+  name: 'Users',
   props: {
     TopNavBar: false,
     default: true
   },
   components: {
     TopNavBar,
-    default: SearchView
+    default: UsersView
   },
   meta: {
-    title: `Search`
+    title: `Users`
   }
 }]

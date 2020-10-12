@@ -12,16 +12,19 @@
         </router-link>
       </div>
       <div class="right-side">
-        <SearchBar />
         <div class="UserStatusContainer" v-if="isLogin">
           <img :src="user.profileImg" class="UserImg" @click.stop="showStatus = !showStatus">
           <div class="StatusContainer" v-if="showStatus">
             <router-link tag="div" :to="`/${user.username}`" class="UserInfo">
-              <div class="Username">@{{user.username}}</div>
+              <div class="BtnItem Name">@{{user.username}}</div>
             </router-link>
             <div class="divider"></div>
             <router-link tag="div" :to="`/${user.username}/edit`" class="EditProfile">
-              <div class="Username">Edit profile</div>
+              <div class="BtnItem Name">Edit profile</div>
+            </router-link>
+            <div class="divider"></div>
+            <router-link tag="div"  to="/users" class="FindUsers">
+              <div class="BtnItem Name">Find other users</div>
             </router-link>
             <div class="divider"></div>
             <div class="Btns">
@@ -150,12 +153,12 @@ export default {
   margin: 0 10px;
   cursor: pointer;
 }
+#TopNavBar .FindUsers,
 #TopNavBar .EditProfile,
 #TopNavBar .UserInfo {
-  padding: 0 16px;
   cursor: pointer;
 }
-#TopNavBar .EditProfile .Name,
+
 #TopNavBar .UserInfo .Name{
   font-size: 18px;
   line-height: 24px;
@@ -165,7 +168,7 @@ export default {
   font-weight: bold;
 }
 
-#TopNavBar .UserInfo .Username {
+#TopNavBar .UserInfo .Name{
   color: #657786;
 }
 
