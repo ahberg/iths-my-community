@@ -14,7 +14,7 @@
         <div class="Date">{{RegPostDate(post.created)}}</div>
       </div>
       <div class="Content" v-html="post.content"></div>
-      <div class="OperationBtns">
+      <div class="OperationBtns" v-if="isAuthor(post.author)">
         <div class="ReplyBtn Btn">
           <span class="BtnWrapper" @click.stop="openReplyBox">
             <i class="far fa-comment"></i>
@@ -35,18 +35,6 @@
         </div>
       </div>
     </div>
-    <PostCommentBoxComponent v-if="showReplyBox" @Close="showReplyBox = false" @ReplySuccess="replySuccessEventHandler" :postId="post.id">
-      <template slot="Title">{{post.author.name}}</template>
-      <template slot="ProfileImg">
-        <img :src="post.author.profileImg" alt="">
-      </template>
-      <template slot="Name">{{post.author.name}}</template>
-      <template slot="Account">{{post.author.account}}</template>
-      <template slot="Date">{{RegPostDate(post.created)}}</template>
-      <template slot="PostContent" >
-        <div v-html="post.content"></div>
-      </template>
-    </PostCommentBoxComponent>
   </div>
 </template>
 
@@ -84,7 +72,7 @@ export default {
     },
     commentsCount: function () {
       return this.comments.length
-    }
+    },
   },
   created () {
     this.likes = []
@@ -107,8 +95,8 @@ export default {
     async deletePost (postId) {
       let res = await postAPI.DeletePost(postId)
       if (res.success) {
-            this.$emit('deletePost', postId)
-          console.log('delete')
+        this.$emit('deletePost', postId)
+        console.log('delete')
       }
     },
     openReplyBox () {
@@ -122,6 +110,12 @@ export default {
     },
     replySuccessEventHandler (comments) {
       this.comments = comments
+    },
+    isAuthor: function (postId) {
+      if (postId === this.$store.getters.userID) {
+        return true
+      }
+      return false
     }
   }
 }

@@ -39,7 +39,6 @@
       </div>
       <div class="RightSideContainer">
         <LoadingAnimationComponent :class="{loadingAnimation: true, loaded: postLoaded}" />
-        <PostCreaterComponent @newPost="newPostEventHandler"/>
         <PostsBoxComponent :posts="posts" detailPostRouteName="UserDetailPostInfo" @deletePost="deletePostEventHandler" v-if="postLoaded"/>
         <router-view />
       </div>
@@ -49,9 +48,12 @@
 
 <script>
 import profileAPI from '@/API/User/profile'
+import PostsBoxComponent from '@/components/Post/PostsBox'
+import LoadingAnimationComponent from '@/components/Animate/Loading'
+import ErrorMessageBar from '@/components/Bar/ErrorMessageBar'
 export default {
   name: 'UserProfile',
-  components: {},
+  components: {PostsBoxComponent, LoadingAnimationComponent, ErrorMessageBar},
   data () {
     return {
       user: null,
@@ -78,7 +80,7 @@ export default {
       return '/static/img/default-user-bkg-img.jpg'
     },
     userPostsCount: function () {
-      return this.user ? 0 : 0
+      return this.user ? this.posts.length : 0
     },
     userFollowingCount: function () {
       return this.user ? this.user.following.length : 0
@@ -100,6 +102,9 @@ export default {
       }
 
       this.user = res.user
+      this.posts = this.user.posts
+      this.postLoaded = true
+
       document.title = `${this.user.name} (@${this.user.username})`
     },
     getPosts: async function () {
