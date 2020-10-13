@@ -3,7 +3,6 @@
     <div class="HeadContainer">
       <div class="Content">
         <div class="Txt">
-          推文
         </div>
       </div>
     </div>
@@ -49,11 +48,10 @@ export default {
       this.posts = []
       this.loaded = false
       let personAccount = this.$route.params.PersonAccount
-      let res = await personAPI.GetPersonPosts(personAccount);
+      let res = await personAPI.GetPersonPosts(personAccount)
       this.loaded = true
 
       if (!res.result) {
-        console.log(res)
         return
       }
 

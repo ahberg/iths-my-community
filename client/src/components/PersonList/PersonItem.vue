@@ -7,11 +7,11 @@
           <img :src="person.profileImg" alt="">
         </div>
         <div class="Btn">
-          <FollowBtn class="small" :userId="person.account" :following="!!person.isFollowing" />
+          <FollowBtn class="small" :userId="person.username" :following="!!person.isFollowing" />
         </div>
         <div class="ProfileInfo">
           <div class="Name">
-            <router-link :to="`/${person.account}`">
+            <router-link :to="`/profile/${person.username}`">
               {{person.name}}
             </router-link>
           </div>

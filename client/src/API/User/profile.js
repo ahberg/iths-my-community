@@ -1,31 +1,32 @@
 import axios from 'axios'
+
 // Get logined user self's basic information
-async function getBasicInfo () {
+async function getBasicInfo (username) {
   let res
 
   try {
     res = await axios({
       method: 'GET',
-      url: 'api/user/info'
+      url: `/api/users/${username}`
     })
 
     return res.data
   } catch (e) {
     return {
-      result: false,
+      success: false,
       errMsg: 'Failed api/user/info'
     }
   }
 }
 
 // Get logined user self's and following's posts
-async function getPosts () {
+async function getPosts (username) {
   let res
 
   try {
     res = await axios({
       method: 'GET',
-      url: '/api/user/posts'
+      url: `/api/users/posts${username}`
     })
 
     return res.data
