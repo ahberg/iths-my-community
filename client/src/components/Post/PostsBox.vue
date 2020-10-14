@@ -21,8 +21,7 @@ export default {
   props: ['posts', 'detailPostRouteName'],
   methods: {
     async deletePost (postId) {
-       let removeIndex = this.posts.map(item => item.id).indexOf(postId)
-      console.log('delete post ' + removeIndex +  ' ' + postId)
+      let removeIndex = this.posts.map(item => item.id).indexOf(postId)
       this.$emit('deletePost', postId)
     }
   },

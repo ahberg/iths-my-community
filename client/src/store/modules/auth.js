@@ -27,29 +27,22 @@ const getters = {
 }
 
 const actions = {
-  regist: async ({ commit }, para) => {
-    if (!para.name || !para.username || !para.password || !para.password2) {
+  regist: async ({ commit} ,para) => {
+    if (!para.name || !para.username || !para.password) {
       return {
-        errMsg: 'Empty fields',
-        result: false
+        message: 'Empty fields',
+        success: false
       }
     }
 
-    let { res, token } = await userAuth.regist(para)
-    return res
-    if (res.result) {
-      commit('setUser', res.user)
-      commit('setAuthToken', token)
-      commit('setLoginTime', moment())
-      window.localStorage.setItem('AuthToken', token)
-    }
+    let  res  = await userAuth.regist(para)
     return res
   },
   login: async ({ commit }, para) => {
     if (!para.username || !para.password) {
       return {
-        errMsg: 'No username or password',
-        result: false
+        message: 'No username or password',
+        succcess: false
       }
     }
     let { res, token } = await userAuth.login(para)

@@ -9,7 +9,7 @@ async function login (request) {
     return {
       res: {
         success: false,
-        errMsg: e
+        errMsg: e.response.data.message
       },
       token: null
     }
@@ -27,26 +27,15 @@ async function regist (request) {
   try {
     res = await axios.post('/api/user/', request)
   } catch (e) {
-    console.log(e.response.data)
-    return {
-      res: {
-        success: false,
-        message: e.response.data.message
-      },
-      token: null
-    }
+    return e.response.data
   }
 
-  return {
-    res: res.data,
-    token: res.headers['x-auth']
-  }
+  return res.data
 }
 
 async function checkAuth (token) {
   let res
   axios.defaults.headers.common['Authorization'] = token
-  
 
   try {
     res = await axios({

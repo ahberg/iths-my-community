@@ -24,14 +24,6 @@
         </div>
       </div>
     </div>
-    <div class="LoginHint">
-      <div class="Wrapper">
-        <div class="hint">
-          <span>Already registered ?</span>
-          <router-link to="/login">sign in »</router-link>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -157,15 +149,4 @@ export default {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #71c9f8;
 }
 
-.LoginHint {
-  padding: 20px 10px;
-  background-color: #f5f8fa;
-  font-size: 14px;
-  line-height: 20px;
-  color: #657786;
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-  max-width: 840px;
-  margin: 0 auto;
-}
 </style>

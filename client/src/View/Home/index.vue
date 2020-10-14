@@ -19,7 +19,7 @@
           </div>
           <div class="">
             <span><i class="fas fa-users"></i></span>
-            <span> Users</span>
+            <span>Users</span>
           </div>
           <div class="">
             <span><i class="far fa-comment"></i></span>

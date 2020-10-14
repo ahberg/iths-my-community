@@ -3,23 +3,23 @@
     <div class="RegistFormContainer">
       <div class="Wrapper">
         <div class="RegistText">
-          <span>Create your username</span>
+          <span>Create account</span>
         </div>
         <div class="ErrHint alert alert-danger" v-if="errHint">
           {{ errHint }}
         </div>
         <div class="RegistInput">
           <div class="username">
-            <input type="text" v-model="username" placeholder="Username">
+            <input type="text" v-model="username" placeholder="username (only lowercase)">
           </div>
           <div class="name">
             <input type="text" v-model="name" placeholder="Name">
             </div>
+          <div class="bio input">
+            <textarea type="textarea" v-model="bio" placeholder="About you"></textarea>
+          </div>
           <div class="password">
             <input type="password" v-model="password" placeholder="password">
-          </div>
-          <div class="password-confirm">
-            <input type="password" v-model="password2" placeholder="password confirm">
           </div>
         </div>
         <div class="Submit">
@@ -45,6 +45,7 @@ export default {
     return {
       name: null,
       username: null,
+      bio: null,
       password: null,
       password2: null,
       errHint: ''
@@ -55,16 +56,15 @@ export default {
       let res = await this.$store.dispatch('regist', {
         name: this.name,
         username: this.username,
-        password: this.password,
-        password2: this.password2
+        bio: this.bio,
+        password: this.password
       })
-
       if (res.success === false) {
+        console.log(res,333)
         this.errHint = res.message
-        return
+      } else {
+        this.$router.push('/login')
       }
-
-      this.$router.push('/login')
     }
   }
 }
@@ -99,8 +99,9 @@ export default {
   font-weight: 600;
   margin: 40px 0 20px;
 }
-
+.RegistInput textarea,
 .RegistInput input {
+  margin-bottom: 15px;
   width: 97%;
   max-width: 280px;
   padding: 4px;
@@ -115,11 +116,6 @@ export default {
   outline: 0;
   color: #14171a;
   border-color: rgba(0,132,180,0.5);
-}
-
-.RegistInput .username,
-.RegistInput .password {
-  margin-bottom: 15px;
 }
 
 .Submit {
