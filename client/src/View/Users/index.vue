@@ -46,7 +46,6 @@ export default {
 
       if (!res.success) {
         this.errorMessage = 'List users api error'
-        console.log(res)
         return
       }
 

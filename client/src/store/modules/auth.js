@@ -52,7 +52,6 @@ const actions = {
       commit('setAuthToken', token)
       commit('setLoginTime', moment())
       window.localStorage.setItem('AuthToken', token)
-      console.log('save token' + token)
     }
     return res
   },

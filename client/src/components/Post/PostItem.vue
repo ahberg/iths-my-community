@@ -96,7 +96,6 @@ export default {
       let res = await postAPI.DeletePost(postId)
       if (res.success) {
         this.$emit('deletePost', postId)
-        console.log('delete')
       }
     },
     openReplyBox () {
