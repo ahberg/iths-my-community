@@ -21,6 +21,9 @@
           <div class="password">
             <input type="password" v-model="password" placeholder="password">
           </div>
+           <div class="spamlock">
+            <input type="text" v-model="spamlock" placeholder="captcha 7 + 3 = ?">
+          </div>
         </div>
         <div class="Submit">
           <button class="btn submit" type="button" @click="registEventHandler">Done</button>
@@ -47,7 +50,7 @@ export default {
       username: null,
       bio: null,
       password: null,
-      password2: null,
+      spamlock: null,
       errHint: ''
     }
   },
@@ -57,10 +60,10 @@ export default {
         name: this.name,
         username: this.username,
         bio: this.bio,
-        password: this.password
+        password: this.password,
+        spamlock: this.spamlock
       })
       if (res.success === false) {
-        console.log(res,333)
         this.errHint = res.message
       } else {
         this.$router.push('/login')
