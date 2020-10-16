@@ -15,7 +15,7 @@
         <div class="UserStatusContainer" v-if="isLogin">
           <img :src="user.profileImg" class="UserImg" @click.stop="showStatus = !showStatus">
           <div class="StatusContainer" v-if="showStatus">
-            <router-link tag="div" :to="`/${user.username}`" class="UserInfo">
+            <router-link tag="div" :to="`/`" class="UserInfo">
               <div class="BtnItem Name">@{{user.username}}</div>
             </router-link>
             <div class="divider"></div>
@@ -38,12 +38,10 @@
 </template>
 
 <script>
-import SearchBar from './SearchBar'
 
 export default {
   name: 'TopNavBar',
   components: {
-    SearchBar
   },
   data() {
     return {

@@ -1,7 +1,7 @@
 .DS_Store
 .tern-project
 node_modules/
-/cleint/dist/
+/client/dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

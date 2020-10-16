@@ -1,13 +1,8 @@
 import Home from '@/View/Home'
-import PersonalHome from '@/View/Home/Personal'
-import UserHome from '@/View/Home/User'
 import EditProfile from '@/View/Home/EditProfile'
-
 import TopNavBar from '@/components/Bar/TopNavBar'
-import PersonalPost from '@/components/Home/Personal/PersonalPost'
-import PersonalFollowing from '@/components/Home/Personal/Following'
-import PersonalFollower from '@/components/Home/Personal/Follower'
-import DetailPostInfoComponent from '@/components/Post/DetailPostInfo'
+
+import UserHome from '@/View/Home/User'
 
 import store from '@/store'
 
@@ -26,58 +21,13 @@ export default [
     }
   },
   {
-    path: '/:PersonAccount',
-    redirect: {
-      name: 'PersonPosts'
-    },
-    components: {
-      TopNavBar,
-      default: PersonalHome
-    },
-    children: [
-      {
-        path: '.',
-        name: 'PersonPosts',
-        component: PersonalPost,
-        children: [
-          {
-            path: 'post/:PostId',
-            name: 'PersonDetailPostInfo',
-            components: {
-              DetailPostInfoComponent
-            }
-          }
-        ]
-      },
-      {
-        path: 'following',
-        name: 'PersonFollowing',
-        component: PersonalFollowing
-      },
-      {
-        path: 'follower',
-        name: 'PersonFollower',
-        component: PersonalFollower
-      }
-    ]
-  },
-  {
     path: '/',
     name: 'UserHome',
     components: {
       TopNavBar,
       default: UserHome
     },
-    children: [
-      {
-        path: ':PersonAccount/post/:id',
-        name: 'UserDetailPostInfo',
-        props: {
-          backRoute: '/'
-        },
-        component: DetailPostInfoComponent
-      }
-    ],
+
     beforeEnter (to, from, next) {
       if (!store.getters.isLogin) {
         return next({ name: 'Home' })
@@ -86,6 +36,7 @@ export default [
       return next()
     }
   },
+
   {
     path: '/:PersonAccount/edit',
     name: 'EditProfile',

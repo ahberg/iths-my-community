@@ -7,7 +7,6 @@
           <img :src="person.profileImg" alt="">
         </div>
         <div class="Btn">
-          <FollowBtn class="small" :userId="person.username" :following="!!person.isFollowing" />
         </div>
         <div class="ProfileInfo">
           <div class="Name">
@@ -28,13 +27,11 @@
 </template>
 
 <script>
-import FollowBtn from '@/components/Btns/Follow'
 
 export default {
   name: 'PeopleItem',
   props: ['person'],
   components: {
-    FollowBtn
   }
 }
 </script>

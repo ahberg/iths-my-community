@@ -15,23 +15,12 @@
       </div>
       <div class="Content" v-html="post.content"></div>
       <div class="OperationBtns" v-if="isAuthor(post.author)">
-        <div class="ReplyBtn Btn">
-          <span class="BtnWrapper" @click.stop="openReplyBox">
-            <i class="far fa-comment"></i>
-            <span class="Count">{{commentsCount}}</span>
-          </span>
-        </div>
-        <div class="LikeBtn Btn" :isLiked="isLiked">
-          <span class="BtnWrapper" @click.stop="toggleLike(post.id)">
-            <i class="fas fa-heart" v-if="isLiked"></i>
-            <i class="far fa-heart" v-if="!isLiked"></i>
-            <span class="Count">{{likesCount}}</span>
-          </span>
-          </div>
+       
           <div class="DeleteBtn Btn" >
           <span class="BtnWrapper" @click.stop="deletePost(post.id)">
             <i class="far fa-trash-alt"></i>
           </span>
+          
         </div>
       </div>
     </div>
@@ -41,49 +30,28 @@
 <script>
 import moment from 'moment'
 
-import PostCommentBoxComponent from './CommentBox'
+
 import postAPI from '@/API/Post'
 
 export default {
   name: 'PostItem',
   props: ['post', 'detailPostRouteName'],
   components: {
-    PostCommentBoxComponent
   },
   data () {
     return {
       likes: [],
-      comments: [],
       showReplyBox: false
     }
   },
   computed: {
-    postRouteName: function () {
-      return this.detailPostRouteName ? this.detailPostRouteName : 'PersonDetailPostInfo'
-    },
     RegPostDate: function () {
       return date => moment(date).format('YYYY-MM-DD')
-    },
-    likesCount: function () {
-      return this.likes.length
-    },
-    isLiked: function () {
-      return this.likes.includes(this.$store.getters.userID)
-    },
-    commentsCount: function () {
-      return this.comments.length
-    },
-  },
-  created () {
-    this.likes = []
-    this.comments = []
-  },
-  watch: {
-    post: function () {
-      this.likes = this.post.likes
-      this.comments = this.post.comments
     }
   },
+  created () {
+  },
+  
   methods: {
     async toggleLike (postId) {
       let res = await postAPI.ToggleLike(postId)
