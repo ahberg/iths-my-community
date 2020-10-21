@@ -7,20 +7,18 @@
     </div>
     <div class="RightSide">
       <div class="Info">
-        <div class="Name">{{post.author.name}}</div>
-        <div class="UserId">
-          @<span class="id">{{post.author.account}}</span>
+        <router-link tag="div" :to="{ name: 'UserProfile', params: {Username:authorUser.username} }" v-if="!isAuthor(post.author)" class="UserName">
+          {{ authorUser.name }}
+        </router-link>
+        <div v-else class="UserName"> {{this.$store.state.Auth.user.name }} </div>
+        <div class="Date">{{RegPostDate(post.createdAt)}}</div>
         </div>
-        <div class="Date">{{RegPostDate(post.created)}}</div>
-      </div>
       <div class="Content" v-html="post.content"></div>
       <div class="OperationBtns" v-if="isAuthor(post.author)">
-       
           <div class="DeleteBtn Btn" >
           <span class="BtnWrapper" @click.stop="deletePost(post.id)">
             <i class="far fa-trash-alt"></i>
           </span>
-          
         </div>
       </div>
     </div>
@@ -30,28 +28,28 @@
 <script>
 import moment from 'moment'
 
-
 import postAPI from '@/API/Post'
 
 export default {
   name: 'PostItem',
   props: ['post', 'detailPostRouteName'],
-  components: {
-  },
+  components: {},
   data () {
     return {
       likes: [],
-      showReplyBox: false
+      showReplyBox: false,
+      authorUser: this.$store.state.Auth.user.following.find(
+        (a) => a.id === this.post.author
+      )
     }
   },
   computed: {
     RegPostDate: function () {
-      return date => moment(date).format('YYYY-MM-DD')
+      return (date) => moment(date).format('YYYY-MM-DD H:mm')
     }
   },
-  created () {
-  },
-  
+  created () {},
+
   methods: {
     async toggleLike (postId) {
       let res = await postAPI.ToggleLike(postId)
@@ -133,13 +131,14 @@ export default {
   font-weight: bold;
 }
 
-.Post .Info .UserId,
+.Post .Info .UserName,
 .Post .Info .Date {
   font-size: 14px;
-  color: #657786;
-  margin: 0 5px;
+  margin-right: 5px;
 }
-
+.Post .Info .Date {
+  color: #657786;
+}
 .Post .Content {
   font-size: 14px;
   line-height: 20px;
@@ -172,7 +171,7 @@ export default {
 }
 
 .Post .LikeBtn:hover,
-.Post .LikeBtn[isLiked=true]{
+.Post .LikeBtn[isLiked="true"] {
   color: #e0245e;
 }
 </style>
