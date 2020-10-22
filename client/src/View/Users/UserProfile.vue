@@ -33,13 +33,14 @@
                   <span>{{userFollowingCount}}</span>
                 </div>
               </div>
+          <FollowButton :following="isFollowing" :userId="this.user.id" />
             </div>
           </div>
         </div>
       </div>
       <div class="RightSideContainer">
         <LoadingAnimationComponent :class="{loadingAnimation: true, loaded: postLoaded}" />
-        <PostsBoxComponent :posts="posts" detailPostRouteName="UserDetailPostInfo" @deletePost="deletePostEventHandler" v-if="postLoaded"/>
+        <PostsBoxComponent :posts="posts" detailPostRouteName="UserDetailPostInfo"  v-if="postLoaded"/>
         <router-view />
       </div>
     </div>
@@ -48,19 +49,22 @@
 
 <script>
 import profileAPI from '@/API/User/profile'
+import followAPI from '@/API/User/follow'
+
+import FollowButton from '@/components/Btns/Follow'
 import PostsBoxComponent from '@/components/Post/PostsBox'
 import LoadingAnimationComponent from '@/components/Animate/Loading'
 import ErrorMessageBar from '@/components/Bar/ErrorMessageBar'
 export default {
   name: 'UserProfile',
-  components: {PostsBoxComponent, LoadingAnimationComponent, ErrorMessageBar},
+  components: {PostsBoxComponent, LoadingAnimationComponent, ErrorMessageBar,FollowButton},
   data () {
     return {
       user: null,
       posts: [],
       userLoaded: false,
       postLoaded: false,
-      errorMessage: ''
+      errorMessage: '',
     }
   },
   computed: {
@@ -84,6 +88,9 @@ export default {
     },
     userFollowingCount: function () {
       return this.user ? this.user.following.length : 0
+    },
+    isFollowing: function () {
+      return this.$store.state.Auth.user.following.some(f => f.id === this.user.id) 
     }
   },
   mounted () {
@@ -121,13 +128,12 @@ export default {
 
       this.posts = res.posts
     },
+    addFollow () {
+       followAPI.followUser(this.user.id)
+    },
     newPostEventHandler (newPost) {
       this.posts.unshift(newPost)
     },
-    deletePostEventHandler (id) {
-      let removeIndex = this.posts.map(item => item.id).indexOf(id)
-      this.posts.splice(removeIndex, 1)
-    }
   }
 }
 </script>

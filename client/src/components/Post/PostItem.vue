@@ -7,11 +7,13 @@
     </div>
     <div class="RightSide">
       <div class="Info">
-        <router-link tag="div" :to="{ name: 'UserProfile', params: {Username:authorUser.username} }" v-if="!isAuthor(post.author)" class="UserName">
-          {{ authorUser.name }}
-        </router-link>
-        <div v-else class="UserName"> {{this.$store.state.Auth.user.name }} </div>
-        <div class="Date">{{RegPostDate(post.createdAt)}}</div>
+        <div v-if="isCurrentProfile()" >
+          <router-link tag="div" :to="{ name: 'UserProfile', params: {Username:authorUser.username} }" v-if="!isAuthor(post.author)" class="UserName">
+            {{ authorUser.name }}
+          </router-link>
+          <div v-else class="UserName"> {{this.$store.state.Auth.user.name }} </div>
+          </div>
+          <div class="Date">{{RegPostDate(post.createdAt)}}</div>
         </div>
       <div class="Content" v-html="post.content"></div>
       <div class="OperationBtns" v-if="isAuthor(post.author)">
@@ -48,8 +50,6 @@ export default {
       return (date) => moment(date).format('YYYY-MM-DD H:mm')
     }
   },
-  created () {},
-
   methods: {
     async toggleLike (postId) {
       let res = await postAPI.ToggleLike(postId)
@@ -81,6 +81,13 @@ export default {
         return true
       }
       return false
+    },
+    isCurrentProfile () {
+      if (this.$route.name === 'UserProfile') {
+        return false
+      } else {
+        return true
+      }
     }
   }
 }

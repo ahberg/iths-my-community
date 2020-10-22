@@ -94,29 +94,18 @@ export default {
       return this.user ? this.user.following.length : 0
     }
   },
-  mounted () {
+  async mounted () {
     this.getUserInfo()
     this.getPosts()
   },
   methods: {
     getUserInfo: async function () {
-      this.userLoaded = false
-      this.user = null
-
-      let res = await UserInfoAPI.getBasicInfo()
-      this.userLoaded = true
-
-      if (!res.success) {
-        return
-      }
-
-      this.user = res.user
+      await this.$store.dispatch('checkAuth')
+      this.user = this.$store.state.Auth.user
+      console.log('loaded')
       document.title = `${this.user.name} (@${this.user.username})`
     },
     getPosts: async function () {
-      this.postLoaded = false
-      this.posts = []
-
       let res = await UserInfoAPI.getPosts()
       this.postLoaded = true
 
