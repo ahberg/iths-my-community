@@ -1,12 +1,12 @@
 <template lang="html">
   <div class="PostsBox">
-    <div class="PostsContainer">
-      <PostItemComponent v-for="post in posts" :post="post" @deletePost="deletePost" :detailPostRouteName="detailPostRouteName" :key="post.id"/>
+    <transition-group  name="PostList" class="PostsContainer" tag="div" >
+      <PostItemComponent class="PostItem" v-for="post in posts" :post="post" @deletePost="deletePost" :detailPostRouteName="detailPostRouteName" v-bind:key="post"/>
+    </transition-group>
       <div class="NonPost" v-if="!posts.length">
         <!--<img src="/static/img/twitter-bird.png" alt="">-->
         <div class="txt">None post</div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
   methods: {
     async deletePost (postId) {
       let removeIndex = this.posts.map(item => item.id).indexOf(postId)
-      this.$emit('deletePost', postId)
+    /  this.$emit('deletePost', postId)
     }
   },
 }
@@ -30,7 +30,8 @@ export default {
 
 <style lang="css" scoped>
 .PostsBox {
-  background-color: white;
+  background-color:#e6ecf0;
+
 }
 
 .NonPost {
@@ -43,5 +44,24 @@ export default {
 .NonPost img {
   width: 30px;
   margin-bottom: 5px;
+
 }
+
+
+.PostItem {
+  height: 100px;
+  padding: 9px 12px;
+}
+.PostList-enter-active, .PostList-leave-active {
+  transition: opacity 0.7s, padding 1s,height 1.5s;
+}
+.PostList-enter, .PostList-leave-to /* .list-leave-active below version 2.1.8 */ {
+  height: 0;
+  min-height: 0;
+  padding: 0;
+  opacity: 0;
+
+}
+
+
 </style>

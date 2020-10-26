@@ -95,8 +95,6 @@ export default {
 
 <style lang="css" scoped>
 .Post {
-  padding: 9px 12px;
-  min-height: 51px;
   border-bottom: 1px solid #e6ecf0;
   cursor: pointer;
   display: flex;
@@ -115,7 +113,6 @@ export default {
 
 .Post .ProfileImg {
   width: 100%;
-  height: 48px;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -140,12 +137,12 @@ export default {
 
 .Post .Info .UserName,
 .Post .Info .Date {
+  color: #657786;
   font-size: 14px;
   margin-right: 5px;
 }
-.Post .Info .Date {
-  color: #657786;
-}
+
+
 .Post .Content {
   font-size: 14px;
   line-height: 20px;
