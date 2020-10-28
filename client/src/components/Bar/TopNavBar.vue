@@ -62,7 +62,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logout')
-      window.location.reload()
+      window.location.href = '/'
     }
   }
 }
