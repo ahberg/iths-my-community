@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     userName: function () {
-      return this.user ? this.user.username : ''
+      return this.user ? this.user.name : ''
     },
     userAccount: function () {
       return this.user ? this.user.username : ''
