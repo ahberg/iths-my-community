@@ -8,8 +8,9 @@ import axios from 'axios'
 
 if (process.env.NODE_ENV === 'production') {
   axios.defaults.baseURL = process.env.API_BASE_URL
-}
+} 
 
+axios.defaults.baseURL = 'http://localhost:3009/local/'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

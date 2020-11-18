@@ -7,38 +7,19 @@ async function getBasicInfo (username) {
   try {
     res = await axios({
       method: 'GET',
-      url: `/api/users/${username}`
+      url: `/api/profile/${username}`
     })
 
     return res.data
   } catch (e) {
     return {
       success: false,
-      errMsg: 'Failed api/user/info'
+      errMsg: 'Failed api/profile'
     }
   }
 }
 
-// Get logined user self's and following's posts
-async function getPosts (username) {
-  let res
-
-  try {
-    res = await axios({
-      method: 'GET',
-      url: `/api/users/posts${username}`
-    })
-
-    return res.data
-  } catch (e) {
-    return {
-      success: false,
-      errMsg: '/api/user/posts falied'
-    }
-  }
-}
 
 export default {
   getBasicInfo,
-  getPosts
 }
