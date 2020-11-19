@@ -1,11 +1,11 @@
 import axios from 'axios'
-async function updateUser (userId, data) {
+async function updateUser (data) {
   let res
 
   try {
     res = await axios({
       method: 'PUT',
-      url: `/api/users/${userId}`,
+      url: `/api/user`,
       data: data
     })
   } catch (e) {

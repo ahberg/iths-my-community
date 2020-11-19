@@ -57,7 +57,7 @@ export default {
       if (this.bio) {
         fields.bio = this.bio
       }
-      let res = await UserAction.updateUser(this.user.id, fields)
+      let res = await UserAction.updateUser(fields)
 
       
       this.errHint = res.message
