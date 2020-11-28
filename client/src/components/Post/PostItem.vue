@@ -2,13 +2,13 @@
   <div class="Post" >
     <div class="LeftSide">
       <div class="ProfileImg">
-        <img :src="post.author.profileImg" alt="">
+        <img src="" alt="">
       </div>
     </div>
     <div class="RightSide">
       <div class="Info">
         <div v-if="isCurrentProfile()" >
-          <router-link tag="div" :to="{ name: 'UserProfile', params: {Username:authorUser.username} }" v-if="!isAuthor(post.author)" class="UserName">
+          <router-link tag="div" :to="{ name: 'UserProfile', params: {Username:authorUser.username} }" v-if="!isAuthor(post.userId)" class="UserName">
             {{ authorUser.name }}
           </router-link>
           <div v-else class="UserName"> {{this.$store.state.Auth.user.name }} </div>
@@ -16,9 +16,9 @@
           <div class="Date">{{RegPostDate(post.createdAt)}}</div>
         </div>
       <div class="Content" v-html="post.content"></div>
-      <div class="OperationBtns" v-if="isAuthor(post.author)">
+      <div class="OperationBtns" v-if="isAuthor(post.userId)">
           <div class="DeleteBtn Btn" >
-          <span class="BtnWrapper" @click.stop="deletePost(post.id)">
+          <span class="BtnWrapper" @click.stop="deletePost(post.createdAt)">
             <i class="far fa-trash-alt"></i>
           </span>
         </div>
@@ -41,7 +41,7 @@ export default {
       likes: [],
       showReplyBox: false,
       authorUser: this.$store.state.Auth.user.following.find(
-        (a) => a.id === this.post.author
+        (a) => a.id === this.post.userId
       )
     }
   },
@@ -58,10 +58,10 @@ export default {
         this.likes = res.likes
       }
     },
-    async deletePost (postId) {
-      let res = await postAPI.DeletePost(postId)
+    async deletePost (createdAt) {
+      let res = await postAPI.DeletePost(createdAt)
       if (res.success) {
-        this.$emit('deletePost', postId)
+        this.$emit('deletePost', createdAt)
       }
     },
     openReplyBox () {

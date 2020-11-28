@@ -12,6 +12,9 @@
           <div class="name input">
             <input type="text" v-model="name" placeholder="Name">
             </div>
+             <div class="mail input">
+              <input type="email"   v-model="mail" placeholder="mail">
+            </div>
           <div class="password input">
             <input type="password" v-model="password" placeholder="password">
           </div>
@@ -36,6 +39,7 @@ export default {
     return {
       name: null,
       username: null,
+      mail:null,
       bio: null,
       user: {},
       password: null,
@@ -57,6 +61,10 @@ export default {
       if (this.bio) {
         fields.bio = this.bio
       }
+
+      if (this.mail) {
+        fields.mail = this.mail
+      }
       let res = await UserAction.updateUser(fields)
 
       
@@ -66,6 +74,7 @@ export default {
     async getUserData () {
       this.user = this.$store.state.Auth.user
       this.name = this.user.name
+      this.mail = this.user.mail
       this.bio = this.user.bio
     }
 

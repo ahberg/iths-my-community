@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="PostsBox">
     <transition-group  name="PostList" class="PostsContainer" tag="div" >
-      <PostItemComponent class="PostItem" v-for="post in posts" :post="post" @deletePost="deletePost" :detailPostRouteName="detailPostRouteName" v-bind:key="post.id"/>
+      <PostItemComponent class="PostItem" v-for="post in posts" :post="post" @deletePost="deletePost" :detailPostRouteName="detailPostRouteName" v-bind:key="post.createdAt"/>
     </transition-group>
       <div class="NonPost" v-if="!posts.length">
         <!--<img src="/static/img/twitter-bird.png" alt="">-->

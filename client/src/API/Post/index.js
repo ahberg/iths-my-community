@@ -21,13 +21,13 @@ async function SendPost (request) {
   return res.data
 }
 
-async function DeletePost (postId) {
+async function DeletePost (createdAt) {
   let res
 
   try {
     res = await axios({
       method: 'DELETE',
-      url: `/api/post/${postId}`
+      url: `/api/post/${createdAt}`
     })
   } catch (e) {
     return {
